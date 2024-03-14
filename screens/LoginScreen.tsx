@@ -42,6 +42,7 @@ const LoginScreen = () => {
         setLoading(false);
         Alert.alert("Logged in successfully");
         AsyncStorage.setItem("authToken", res.data.accessToken);
+        AsyncStorage.setItem("id",res.data.user._id)
         return navigation.replace("Main");
       }
     } catch (error) {

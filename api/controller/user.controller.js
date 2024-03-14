@@ -66,3 +66,36 @@ export const loginUser = async (req, res) => {
     accessToken,
   });
 };
+
+export const userAddress = async (req, res) => {
+  try {
+    const { userId, address } = req.body;
+    console.log("userid",userId);
+    console.log("address",address);
+    const user = await User.findById(userId)
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    user.addresses.push(address);
+    const savedUser = await user.save();
+    res.status(201).json({ message: "Address saved successfully!", savedUser });
+  } catch (error) {
+    console.log("Error-----",error);
+    res.status(500).json({ message: "Error in saving address" });
+  }
+};
+
+export const getAllUserAddress = async (req, res) => {
+  try {
+    const userId  = req.params.userId;
+    const user = await User.findById(userId)
+    console.log("user",user);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    const addresses = user.addresses;
+    res.status(200).json(addresses);
+  } catch (error) {
+    res.status(500).json({ message: "Error in getting address" });
+  }
+};

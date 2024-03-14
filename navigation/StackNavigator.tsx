@@ -10,6 +10,8 @@ import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import ProductInfoScreen from "../screens/ProductInfoScreen";
+import AddressScreen from "../screens/AddressScreen";
+import AddAddressScreen from "../screens/AddAddressScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -99,6 +101,20 @@ const StackNavigator = () => {
         <Stack.Screen
           name="Info"
           component={ProductInfoScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Address"
+          component={AddAddressScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Add"
+          component={AddressScreen}
           options={{
             headerShown: false,
           }}
