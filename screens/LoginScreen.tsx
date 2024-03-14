@@ -22,7 +22,7 @@ const LoginScreen = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const navigation = useNavigation();
+  const navigation = useNavigation() as any;
   const isEmpty = email === "" || password === "";
   const handleLogin = async () => {
     if (isEmpty) {
@@ -49,11 +49,19 @@ const LoginScreen = () => {
       console.error("Error registering user:", error.message);
     }
   };
-  useEffect(() =>{
-    const checkLoginStatus= async() =>{
-
-    }
-  },[])
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      try {
+        const token = await AsyncStorage.getItem("authToken");
+        if (token) {
+          navigation.replace("Main");
+        }
+      } catch (error) {
+        console.log("Error", error);
+      }
+    };
+    checkLoginStatus();
+  }, []);
   return (
     <SafeAreaView
       style={{
