@@ -70,8 +70,6 @@ export const loginUser = async (req, res) => {
 export const userAddress = async (req, res) => {
   try {
     const { userId, address } = req.body;
-    console.log("userid",userId);
-    console.log("address",address);
     const user = await User.findById(userId)
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -89,7 +87,6 @@ export const getAllUserAddress = async (req, res) => {
   try {
     const userId  = req.params.userId;
     const user = await User.findById(userId)
-    console.log("user",user);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }

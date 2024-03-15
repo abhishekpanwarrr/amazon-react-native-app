@@ -4,7 +4,8 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import userRouter from "./routes/user.routes.js";
-
+import orderRouter from "./routes/order.routes.js"
+import profileRouter from "./routes/profile.routes.js"
 dotenv.config();
 const app = express();
 
@@ -39,3 +40,5 @@ connectDB()
 
 // ROUTES
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/orders",orderRouter);
+app.use("/api/v1/profile",profileRouter);

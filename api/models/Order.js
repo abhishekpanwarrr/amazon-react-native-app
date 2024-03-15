@@ -36,10 +36,10 @@ const orderSchema = new mongoose.Schema(
         type: String,
         required: true,
       },
-      mobileNo: {
-        type: String,
-        required: true,
-      },
+      // mobileNo: {
+      //   type: String,
+      //   required: true,
+      // },
       houseNo: {
         type: String,
         required: true,
@@ -48,11 +48,11 @@ const orderSchema = new mongoose.Schema(
         type: String,
         required: true,
       },
-      landMark: {
+      landmark: {
         type: String,
         required: true,
       },
-      postalCose: {
+      postalCode: {
         type: String,
         required: true,
       },
