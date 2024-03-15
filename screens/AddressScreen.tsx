@@ -7,12 +7,10 @@ import {
   Pressable,
   Alert,
 } from "react-native";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import jwt_decode from "jwt-decode";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
-import { UserType } from "../context/UserContext";
 
 const AddressScreen = () => {
   const navigation = useNavigation();
@@ -22,7 +20,8 @@ const AddressScreen = () => {
   const [street, setStreet] = useState("");
   const [landmark, setLandmark] = useState("");
   const [postalCode, setPostalCode] = useState("");
-  const { userId, setUserId } = useContext(UserType) as any;
+  const [userId, setUserId] = useState("");
+
   useEffect(() => {
     const fetchUser = async () => {
       const token = await AsyncStorage.getItem("id");
@@ -31,7 +30,7 @@ const AddressScreen = () => {
 
     fetchUser();
   }, []);
-  
+
   const handleAddAddress = () => {
     const address = {
       name,
@@ -59,7 +58,6 @@ const AddressScreen = () => {
       })
       .catch((error) => {
         Alert.alert("Error", "Failed to add address");
-        console.log("error", error);
       });
   };
   return (

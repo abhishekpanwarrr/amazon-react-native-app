@@ -1,5 +1,4 @@
 import {
-  StyleSheet,
   Text,
   View,
   SafeAreaView,
@@ -12,7 +11,7 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -24,6 +23,7 @@ const LoginScreen = () => {
 
   const navigation = useNavigation() as any;
   const isEmpty = email === "" || password === "";
+
   const handleLogin = async () => {
     if (isEmpty) {
       return Alert.alert("Enter all fields");
@@ -42,7 +42,7 @@ const LoginScreen = () => {
         setLoading(false);
         Alert.alert("Logged in successfully");
         AsyncStorage.setItem("authToken", res.data.accessToken);
-        AsyncStorage.setItem("id",res.data.user._id)
+        AsyncStorage.setItem("id", res.data.user._id);
         return navigation.replace("Main");
       }
     } catch (error) {
@@ -51,18 +51,14 @@ const LoginScreen = () => {
     }
   };
   useEffect(() => {
-    const checkLoginStatus = async () => {
-      try {
-        const token = await AsyncStorage.getItem("authToken");
-        if (token) {
-          navigation.replace("Main");
-        }
-      } catch (error) {
-        console.log("Error", error);
+    (async () => {
+      const token = await AsyncStorage.getItem("authToken");
+      if (token) {
+        navigation.replace("Main");
       }
-    };
-    checkLoginStatus();
+    })();
   }, []);
+
   return (
     <SafeAreaView
       style={{
@@ -109,7 +105,7 @@ const LoginScreen = () => {
               flexDirection: "row",
               alignItems: "center",
               gap: 5,
-              backgroundColor: "#d0d0d0",
+              backgroundColor: "#eee",
               paddingVertical: 5,
               borderRadius: 5,
               marginTop: 30,
@@ -123,12 +119,13 @@ const LoginScreen = () => {
             />
             <TextInput
               value={email}
+              placeholderTextColor={"#444"}
               onChangeText={(text) => setEmail(text)}
               style={{
                 color: "gray",
                 marginVertical: 10,
                 width: 300,
-                fontSize: email ? 18 : 16,
+                fontSize: 16,
               }}
               placeholder="Enter your email"
             />
@@ -144,23 +141,24 @@ const LoginScreen = () => {
               flexDirection: "row",
               alignItems: "center",
               gap: 5,
-              backgroundColor: "#d0d0d0",
+              backgroundColor: "#eee",
               paddingVertical: 5,
               borderRadius: 5,
               marginTop: 30,
             }}
           >
-            <AntDesign
-              style={{ marginLeft: 8 }}
-              name="lock1"
+            <FontAwesome
+              name="lock"
               size={24}
               color="gray"
+              style={{ marginLeft: 8 }}
             />
             <TextInput
               value={password}
               onChangeText={(text) => setPassword(text)}
               secureTextEntry
-              style={{ color: "gray", marginVertical: 10, width: 300 }}
+              placeholderTextColor={"#444"}
+              style={{ color: "black", marginVertical: 10, width: 300 }}
               placeholder="Enter your password"
             />
           </View>
@@ -173,7 +171,7 @@ const LoginScreen = () => {
             justifyContent: "space-between",
           }}
         >
-          <Text>Keep me logged in</Text>
+          <Text style={{ color: "#444" }}>Keep me logged in</Text>
           <Text
             style={{
               color: "#007fff",
@@ -225,5 +223,3 @@ const LoginScreen = () => {
 };
 
 export default LoginScreen;
-
-const styles = StyleSheet.create({});

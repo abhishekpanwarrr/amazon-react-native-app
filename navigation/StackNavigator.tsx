@@ -12,6 +12,10 @@ import { Ionicons } from "@expo/vector-icons";
 import ProductInfoScreen from "../screens/ProductInfoScreen";
 import AddressScreen from "../screens/AddressScreen";
 import AddAddressScreen from "../screens/AddAddressScreen";
+import CartScreen from "../screens/CartScreen";
+import ConfirmationScreen from "../screens/ConfirmationScreen";
+import OrderScreen from "../screens/OrderScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -39,13 +43,12 @@ const StackNavigator = () => {
         />
         <Tab.Screen
           name="Profile"
-          component={HomeScreen}
+          component={ProfileScreen}
           options={{
             tabBarLabel: "Profile",
             tabBarLabelStyle: {
               color: "#008e97",
             },
-            headerShown: false,
             tabBarIcon: ({ focused }) =>
               focused ? (
                 <FontAwesome name="user" size={24} color="#008e97" />
@@ -56,7 +59,7 @@ const StackNavigator = () => {
         />
         <Tab.Screen
           name="Cart"
-          component={HomeScreen}
+          component={CartScreen}
           options={{
             tabBarLabel: "Cart",
             tabBarLabelStyle: {
@@ -115,6 +118,20 @@ const StackNavigator = () => {
         <Stack.Screen
           name="Add"
           component={AddressScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Confirm"
+          component={ConfirmationScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Order"
+          component={OrderScreen}
           options={{
             headerShown: false,
           }}

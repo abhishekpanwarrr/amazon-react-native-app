@@ -1,41 +1,37 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  Pressable,
-  TextInput,
-} from "react-native";
-import React, { useEffect, useContext, useState, useCallback } from "react";
+import { Text, View, ScrollView, Pressable, TextInput } from "react-native";
+import React, { useEffect, useState, useCallback } from "react";
 import { Feather, AntDesign } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-//   import { UserType } from "../UserContext";
+import { fetchAddresses, fetchUser } from "../utils/utils";
 
 const AddAddressScreen = () => {
   const navigation = useNavigation() as any;
   const [addresses, setAddresses] = useState([]);
-  useEffect(() => {
-    fetchAddresses();
-  }, []);
-  const fetchAddresses = async () => {
-    try {
-      const userId = await AsyncStorage.getItem("id");
-      console.log("userIdinadd", userId);
+  const [userId, setUserId] = useState("");
 
-      const response = await axios.get(
-        `http://localhost:8000/api/v1/user/address/${userId}`
-      );
-      const addresses = response.data;
-      setAddresses(addresses);
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
-  console.log("address", addresses);
+  useEffect(() => {
+    (async () => {
+      const token = await fetchUser();
+      setUserId(token);
+    })();
+    (async () => {
+      if (userId) {
+        const addresses = await fetchAddresses(userId);
+        setAddresses(addresses);
+      }
+    })();
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      (async () => {
+        const addresses = await fetchAddresses(userId);
+        setAddresses(addresses);
+      })();
+    }, [])
+  );
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={{ marginTop: 50 }}>
@@ -97,6 +93,7 @@ const AddAddressScreen = () => {
           {/* all the added adresses */}
           {addresses?.map((item, index) => (
             <Pressable
+              key={index}
               style={{
                 borderWidth: 1,
                 borderColor: "#D0D0D0",
@@ -190,5 +187,3 @@ const AddAddressScreen = () => {
 };
 
 export default AddAddressScreen;
-
-const styles = StyleSheet.create({});
