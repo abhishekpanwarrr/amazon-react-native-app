@@ -26,6 +26,7 @@ const RegisterScreen = () => {
   const navigation = useNavigation() as any;
 
   const isEmpty = fullName === "" || email === "" || password === "";
+
   const handleRegister = async () => {
     if (isEmpty) {
       return Alert.alert("Enter all fields");
@@ -52,17 +53,12 @@ const RegisterScreen = () => {
     }
   };
   useEffect(() => {
-    const checkLoginStatus = async () => {
-      try {
-        const token = await AsyncStorage.getItem("authToken");
-        if (token) {
-          navigation.replace("Main");
-        }
-      } catch (error) {
-        console.log("Error", error);
+    (async () => {
+      const token = await AsyncStorage.getItem("authToken");
+      if (token) {
+        navigation.replace("Main");
       }
-    };
-    checkLoginStatus();
+    })();
   }, []);
   return (
     <SafeAreaView
@@ -110,7 +106,7 @@ const RegisterScreen = () => {
               flexDirection: "row",
               alignItems: "center",
               gap: 5,
-              backgroundColor: "#d0d0d0",
+              backgroundColor: "#eee",
               paddingVertical: 5,
               borderRadius: 5,
               marginTop: 30,
@@ -131,6 +127,7 @@ const RegisterScreen = () => {
                 width: 300,
                 fontSize: email ? 18 : 16,
               }}
+              placeholderTextColor={"#444"}
               placeholder="Enter full name"
             />
           </View>
@@ -141,7 +138,7 @@ const RegisterScreen = () => {
             flexDirection: "row",
             alignItems: "center",
             gap: 5,
-            backgroundColor: "#d0d0d0",
+            backgroundColor: "#eee",
             paddingVertical: 5,
             borderRadius: 5,
             marginTop: 30,
@@ -162,6 +159,7 @@ const RegisterScreen = () => {
               width: 300,
               fontSize: email ? 18 : 16,
             }}
+            placeholderTextColor={"#444"}
             placeholder="Enter your email"
           />
         </View>
@@ -170,27 +168,28 @@ const RegisterScreen = () => {
             flexDirection: "row",
             alignItems: "center",
             gap: 5,
-            backgroundColor: "#d0d0d0",
+            backgroundColor: "#eee",
             paddingVertical: 5,
             borderRadius: 5,
             marginTop: 30,
           }}
         >
-          <AntDesign
-            style={{ marginLeft: 8 }}
-            name="lock1"
+          <FontAwesome
+            name="lock"
             size={24}
             color="gray"
+            style={{ marginLeft: 8 }}
           />
           <TextInput
             value={password}
             onChangeText={(text) => setPassword(text)}
             secureTextEntry
+            placeholderTextColor={"#444"}
             style={{ color: "gray", marginVertical: 10, width: 300 }}
             placeholder="Enter your password"
           />
         </View>
-        <View
+        {/* <View
           style={{
             marginTop: 12,
             flexDirection: "row",
@@ -207,7 +206,7 @@ const RegisterScreen = () => {
           >
             Forgot password?
           </Text>
-        </View>
+        </View> */}
         <View style={{ marginTop: 50 }}>
           <Pressable
             onPress={() => handleRegister()}
