@@ -1,12 +1,12 @@
 import { Text, View, ScrollView, Pressable, TextInput } from "react-native";
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, FC } from "react";
 import { Feather, AntDesign } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { fetchAddresses, fetchUser } from "../utils/utils";
 
-const AddAddressScreen = () => {
+const AddAddressScreen: FC = () => {
   const navigation = useNavigation() as any;
   const [addresses, setAddresses] = useState([]);
   const [userId, setUserId] = useState("");
@@ -16,6 +16,9 @@ const AddAddressScreen = () => {
       const token = await fetchUser();
       setUserId(token);
     })();
+  }, []);
+
+  useEffect(() => {
     (async () => {
       if (userId) {
         const addresses = await fetchAddresses(userId);
@@ -27,8 +30,10 @@ const AddAddressScreen = () => {
   useFocusEffect(
     useCallback(() => {
       (async () => {
-        const addresses = await fetchAddresses(userId);
-        setAddresses(addresses);
+        if (userId) {
+          const addresses = await fetchAddresses(userId);
+          setAddresses(addresses);
+        }
       })();
     }, [])
   );

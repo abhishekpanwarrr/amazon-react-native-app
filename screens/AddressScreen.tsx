@@ -8,12 +8,12 @@ import {
   Alert,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
+import { fetchUser } from "../utils/utils";
 
 const AddressScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation() as any;
   const [name, setName] = useState("");
   const [mobileNo, setMobileNo] = useState("");
   const [houseNo, setHouseNo] = useState("");
@@ -23,12 +23,10 @@ const AddressScreen = () => {
   const [userId, setUserId] = useState("");
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const token = await AsyncStorage.getItem("id");
+    (async () => {
+      const token = await fetchUser();
       setUserId(token);
-    };
-
-    fetchUser();
+    })();
   }, []);
 
   const handleAddAddress = () => {

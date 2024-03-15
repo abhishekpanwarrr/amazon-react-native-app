@@ -10,14 +10,6 @@ export interface User {
             postalCode: number
             street: string
         }
-        {
-            _id: string
-            houseNo: number
-            landmark: string
-            name: string
-            postalCode: number
-            street: string
-        }
     ]
     createdAt: string
     email: string

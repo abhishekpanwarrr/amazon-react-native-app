@@ -6,9 +6,7 @@ export const registerUser = async (req, res) => {
   if ([name, email, password].some((field) => field?.trim() === "")) {
     return res.status(400).json({ message: "All fields are required" });
   }
-
   const existedUser = await User.findOne({ email });
-
   if (existedUser) {
     return res
       .status(409)
@@ -67,10 +65,10 @@ export const loginUser = async (req, res) => {
   });
 };
 
-export const userAddress = async (req, res) => {
+export const addUserAddress = async (req, res) => {
   try {
     const { userId, address } = req.body;
-    const user = await User.findById(userId)
+    const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -78,15 +76,15 @@ export const userAddress = async (req, res) => {
     const savedUser = await user.save();
     res.status(201).json({ message: "Address saved successfully!", savedUser });
   } catch (error) {
-    console.log("Error-----",error);
+    console.log("Error-----", error);
     res.status(500).json({ message: "Error in saving address" });
   }
 };
 
 export const getAllUserAddress = async (req, res) => {
   try {
-    const userId  = req.params.userId;
-    const user = await User.findById(userId)
+    const userId = req.params.userId;
+    const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }

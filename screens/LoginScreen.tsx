@@ -119,6 +119,7 @@ const LoginScreen = () => {
             />
             <TextInput
               value={email}
+              keyboardType="email-address"
               placeholderTextColor={"#444"}
               onChangeText={(text) => setEmail(text)}
               style={{

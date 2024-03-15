@@ -6,10 +6,9 @@ export const fetchAddresses = async (userId: string) => {
     const response = await axios.get(
       `http://localhost:8000/api/v1/user/address/${userId}`
     );
-    const addresses = await response.data;
-    return addresses
+    return response.data;
   } catch (error) {
-    console.log("error", error);
+    console.log("error---", error);
   }
 };
 

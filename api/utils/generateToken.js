@@ -8,7 +8,6 @@ export const generateAccessAndRefereshTokens = async (userId) => {
 
     user.refreshToken = refreshToken;
     await user.save({ validateBeforeSave: false });
-
     return { accessToken, refreshToken };
   } catch (error) {
     console.log("Error", error);
