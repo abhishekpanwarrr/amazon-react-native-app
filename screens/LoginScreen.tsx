@@ -8,6 +8,7 @@ import {
   Pressable,
   Alert,
   ActivityIndicator,
+  TouchableOpacity,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -47,9 +48,12 @@ const LoginScreen = () => {
       }
     } catch (error) {
       setLoading(false);
-      console.error("Error registering user:", error.message);
+      if (error.message === "Network Error") {
+        Alert.alert("Check your internet connection.");
+      }
     }
   };
+
   useEffect(() => {
     (async () => {
       const token = await AsyncStorage.getItem("authToken");
@@ -122,6 +126,7 @@ const LoginScreen = () => {
               keyboardType="email-address"
               placeholderTextColor={"#444"}
               onChangeText={(text) => setEmail(text)}
+              keyboardAppearance="dark"
               style={{
                 color: "gray",
                 marginVertical: 10,
@@ -172,15 +177,9 @@ const LoginScreen = () => {
             justifyContent: "space-between",
           }}
         >
-          <Text style={{ color: "#444" }}>Keep me logged in</Text>
-          <Text
-            style={{
-              color: "#007fff",
-              fontWeight: "500",
-            }}
-          >
-            Forgot password?
-          </Text>
+          <TouchableOpacity onPress={() => {}}>
+            <Text style={{ color: "#444" }}>Keep me logged in</Text>
+          </TouchableOpacity>
         </View>
         <View style={{ marginTop: 50 }}>
           <Pressable
